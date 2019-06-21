@@ -14,18 +14,18 @@ public class Region extends JComponent {
     Polygon border;
     Player owner;
     boolean hovered = false;
+    boolean selected = false;
     
     Region(String name, int[] xs, int[] ys, int n) {
         this.border = new Polygon(xs, ys, n);
         this.name = name;
     }
     
-    public void setHovered() {
-        this.hovered = true;
+    public void setHovered(boolean value) {
+        this.hovered = value;
     }
-    
-    public void setUnhovered() {
-        this.hovered = false;
+    public void setSelected(boolean value) {
+        this.selected = value;
     }
     
     @Override
@@ -35,7 +35,14 @@ public class Region extends JComponent {
     
     @Override
     public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        if (this.selected) {
+            g2.setStroke(new BasicStroke(10));
+        } else {
+            g2.setStroke(new BasicStroke(1));
+        }
         g.setColor(Color.BLACK);
+        
         g.drawPolygon(this.border);
         Color fillColor = Color.LIGHT_GRAY;
         if (this.owner != null) {

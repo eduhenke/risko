@@ -5,7 +5,9 @@
  */
 package risko;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,12 +17,18 @@ import javax.swing.JFrame;
 public class Risko extends JFrame {
     Risko(List<Region> regions) {
         super();
-        int WIDTH = 800;
+        int WIDTH = 1024;
         int HEIGHT = 600;
         
         this.setBounds(0, 0, WIDTH, HEIGHT);
         this.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
-        this.getContentPane().add(new Map(regions));
+        Map map = new Map(regions);
+        SidePanel sidePanel = new SidePanel();
+        map.addRegionListener(sidePanel);
+        
+        this.getContentPane().setLayout(new BorderLayout());
+        this.getContentPane().add(map, BorderLayout.CENTER);
+        this.getContentPane().add(sidePanel, BorderLayout.EAST);
         this.setVisible(true);
         
     }

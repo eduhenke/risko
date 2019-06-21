@@ -19,8 +19,10 @@ package risko;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JComponent;
+import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 import javax.swing.JPanel;
 
 /**
@@ -29,15 +31,55 @@ import javax.swing.JPanel;
  */
 public class Map extends JPanel {
     List<Region> regions;
+    Region selectedRegion;
+    List<RegionListener> listeners = new ArrayList();
+    
     Map(List<Region> regions) {
         this.regions = regions;
         this.addMouseMotionListener(new MouseAdapter(){
+            @Override
             public void mouseMoved(MouseEvent evt) {
+                boolean hasSelected = false;
                 for (Region reg: regions) {
                     if (reg.contains(evt.getPoint())) {
-                        reg.setHovered();
+                        reg.setHovered(true);
+                        hasSelected = true;
+                        selectedRegion = reg;
+                        for (RegionListener lst: listeners) {
+                            lst.onRegionHover(reg);
+                        }
                     } else {
-                        reg.setUnhovered();
+                        reg.setHovered(false);
+                    }
+                }
+                if (!hasSelected) {
+                    for (RegionListener lst: listeners) {
+                        lst.onRegionUnhover();
+                    }
+                }
+                repaint();
+            }
+        });
+        this.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                boolean hasSelected = false;                
+                for (Region reg: regions) {
+                    if (reg.contains(evt.getPoint())) {
+                        
+                        reg.setSelected(true);
+                        hasSelected = true;
+                        selectedRegion = reg;
+                        for (RegionListener lst: listeners) {
+                            lst.onRegionSelect(reg);
+                        }
+                    } else {
+                        reg.setSelected(false);
+                    }
+                }
+                if (!hasSelected) {
+                    for (RegionListener lst: listeners) {
+                        lst.onRegionDeselect();
                     }
                 }
                 repaint();
@@ -45,10 +87,26 @@ public class Map extends JPanel {
         });
     }
     
+    public void addRegionListener(RegionListener lst) {
+        this.listeners.add(lst);
+    }
+    
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
+        Region selected = this.regions.stream().filter(r -> r.selected).findFirst().orElse(null);
         for (Region reg: this.regions) {
             reg.paintComponent(g);
         }
+        if (selected != null) {
+            selected.paintComponent(g);
+        }
+    }
+    
+    public static interface RegionListener {
+        public void onRegionSelect(Region reg);
+        public void onRegionDeselect();
+        public void onRegionHover(Region reg);
+        public void onRegionUnhover();
     }
 }
