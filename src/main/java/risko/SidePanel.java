@@ -29,9 +29,9 @@ import javax.swing.JPanel;
 public class SidePanel extends JPanel implements Map.RegionListener {
     Map map;
     JLabel selectedRegion = new JLabel(noRegionText);
-    JLabel selectedRegionLabel = new JLabel("Nome da Região selecionada:");
+    JLabel selectedRegionLabel = new JLabel("Região Selecionada:");
     JLabel hoveredRegion = new JLabel(noRegionText);
-    JLabel hoveredRegionLabel = new JLabel("Nome da Região:");
+    JLabel hoveredRegionLabel = new JLabel("Região:");
     private static String noRegionText = "---";
     
     SidePanel() {
@@ -44,13 +44,13 @@ public class SidePanel extends JPanel implements Map.RegionListener {
     }
     
     public void onRegionSelect(Region reg) {
-        this.selectedRegion.setText(reg.name);
+        this.selectedRegion.setText(reg.name + " de " + reg.owner.name);
     }
     public void onRegionDeselect() {
         this.selectedRegion.setText(noRegionText);
     }
     public void onRegionHover(Region reg) {
-        this.hoveredRegion.setText(reg.name);
+        this.hoveredRegion.setText(reg.name + " de " + reg.owner.name);
     }
     public void onRegionUnhover() {
         this.hoveredRegion.setText(noRegionText);

@@ -26,11 +26,14 @@ import java.util.List;
 public class Player {
     Repository<String, Region> states = new Repository();
     Color color;
+    String name;
     
-    Player(Color color, List<Region> regions) {
+    Player(String name, Color color) {
         this.color = color;
-        for (Region reg: regions) {
-            this.states.put(reg.name, reg);
-        }
+        this.name = name;
+    }
+    
+    public void addRegion(Region reg) {
+        this.states.put(reg.name, reg);
     }
 }

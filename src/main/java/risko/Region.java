@@ -37,7 +37,7 @@ public class Region extends JComponent {
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         if (this.selected) {
-            g2.setStroke(new BasicStroke(10));
+            g2.setStroke(new BasicStroke(5));
         } else {
             g2.setStroke(new BasicStroke(1));
         }
