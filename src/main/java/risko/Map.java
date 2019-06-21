@@ -17,23 +17,38 @@
 package risko;
 
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 /**
  *
  * @author henke
  */
-public class Map extends JComponent {
+public class Map extends JPanel {
     List<Region> regions;
     Map(List<Region> regions) {
         this.regions = regions;
+        this.addMouseMotionListener(new MouseAdapter(){
+            public void mouseMoved(MouseEvent evt) {
+                for (Region reg: regions) {
+                    if (reg.contains(evt.getPoint())) {
+                        reg.setHovered();
+                    } else {
+                        reg.setUnhovered();
+                    }
+                }
+                repaint();
+            }
+        });
     }
     
     @Override
     public void paint(Graphics g) {
         for (Region reg: this.regions) {
-            g.drawPolygon(reg);
+            reg.paintComponent(g);
         }
     }
 }
