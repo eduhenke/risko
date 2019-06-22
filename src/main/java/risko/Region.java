@@ -15,9 +15,10 @@ public class Region extends JComponent {
     Player owner;
     boolean hovered = false;
     boolean selected = false;
+    int soldiers = 1;
     
-    Region(String name, int[] xs, int[] ys, int n) {
-        this.border = new Polygon(xs, ys, n);
+    Region(String name, Polygon border) {
+        this.border = border;
         this.name = name;
     }
     

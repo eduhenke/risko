@@ -32,6 +32,7 @@ import javax.swing.JPanel;
 public class Map extends JPanel {
     List<Region> regions;
     Region selectedRegion;
+    Region pastSelectedRegion;
     List<RegionListener> listeners = new ArrayList();
     
     Map(List<Region> regions) {
@@ -69,6 +70,10 @@ public class Map extends JPanel {
                         
                         reg.setSelected(true);
                         hasSelected = true;
+                        if (pastSelectedRegion != null && selectedRegion != null) {
+                            System.out.println("[map] past: " + pastSelectedRegion.name + " | sel: " + selectedRegion.name);
+                        }
+                        pastSelectedRegion = selectedRegion;
                         selectedRegion = reg;
                         for (RegionListener lst: listeners) {
                             lst.onRegionSelect(reg);

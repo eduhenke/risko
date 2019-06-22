@@ -81,7 +81,7 @@ public class RegionFactory {
             xs[i] = screenX;
             ys[i] = screenY;
         }
-        
-        return new Region(name, xs, ys, n);
+        java.awt.Polygon border = new java.awt.Polygon(xs, ys, n);
+        return new Region(name, border);
     }
 }
