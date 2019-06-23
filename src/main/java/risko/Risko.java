@@ -56,21 +56,21 @@ public class Risko extends JFrame {
             public void mouseClicked(MouseEvent evt) {
                 switch(sidePanel.getAction()){
                 case ATTACK:
-                    System.out.println("[risko] past: " + map.pastSelectedRegion.name + " | sel: " + map.selectedRegion.name);
-                    round.player.attack(map.pastSelectedRegion, map.selectedRegion);
+                    System.out.println("[risko] past: " + map.selectedPastRegion.name + " | sel: " + map.selectedRegion.name);
+                    round.player.attack(map.selectedPastRegion, map.selectedRegion);
                 }
             }
         });
 //            round.waitPlayer();
 //            playerIndex++;
-//        }
+//        } 
     }
     
     public static void main(String[] args) throws IOException, FileNotFoundException, InvalidGeoFile, FeatureNotPolygon, MoreThanOneRegion {
         double latSC = -27.1658;
         double lngSC = -50.3504;
         RegionFactory regionFactory;
-        regionFactory = new RegionFactory("/home/henke/risko/42MIE250GC_SIR.json", latSC, lngSC, 100, 450, 250);
+        regionFactory = new RegionFactory("/home/carlinhux/ufsc/poo2/risko/42MIE250GC_SIR.json", latSC, lngSC, 100, 450, 250);
         Random gen = new Random();
         
         List<Region> regions = regionFactory.allRegions();

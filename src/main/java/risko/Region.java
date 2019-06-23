@@ -15,6 +15,7 @@ public class Region extends JComponent {
     Player owner;
     boolean hovered = false;
     boolean selected = false;
+    boolean origin = false;
     int soldiers = 1;
     
     Region(String name, Polygon border) {
@@ -28,10 +29,22 @@ public class Region extends JComponent {
     public void setSelected(boolean value) {
         this.selected = value;
     }
+
+    public void setOrigin(boolean value){
+        this.origin = value;
+    }
+
+    public boolean isOrigin(){
+        return this.origin == true;
+    }
     
     @Override
     public boolean contains(Point p) {
         return this.border.contains(p);
+    }
+
+    public int getSoldiers(){
+        return this.soldiers;
     }
     
     @Override

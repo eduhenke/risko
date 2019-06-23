@@ -31,8 +31,12 @@ import javax.swing.JPanel;
  */
 public class Map extends JPanel {
     List<Region> regions;
+    Region hoveredRegion;
+    Region pastHoveredRegion;
     Region selectedRegion;
-    Region pastSelectedRegion;
+    Region selectedPastRegion;
+    Region selectedOriginRegion;
+
     List<RegionListener> listeners = new ArrayList();
     
     Map(List<Region> regions) {
@@ -45,7 +49,7 @@ public class Map extends JPanel {
                     if (reg.contains(evt.getPoint())) {
                         reg.setHovered(true);
                         hasSelected = true;
-                        selectedRegion = reg;
+                        hoveredRegion = reg;
                         for (RegionListener lst: listeners) {
                             lst.onRegionHover(reg);
                         }
@@ -70,15 +74,21 @@ public class Map extends JPanel {
                         
                         reg.setSelected(true);
                         hasSelected = true;
-                        if (pastSelectedRegion != null && selectedRegion != null) {
-                            System.out.println("[map] past: " + pastSelectedRegion.name + " | sel: " + selectedRegion.name);
+                        if (selectedPastRegion != null && selectedRegion != null) {
+                            System.out.println("[map] past: " + selectedPastRegion.name + " | sel: " + selectedRegion.name);
                         }
-                        pastSelectedRegion = selectedRegion;
+                        selectedPastRegion = selectedRegion;
+                       
                         selectedRegion = reg;
+
+                        if (selectedOriginRegion == null){
+                            selectedOriginRegion = selectedRegion;
+                            reg.setOrigin(true);
+                        }
                         for (RegionListener lst: listeners) {
                             lst.onRegionSelect(reg);
                         }
-                    } else {
+                    } else if (!reg.isOrigin()) {
                         reg.setSelected(false);
                     }
                 }

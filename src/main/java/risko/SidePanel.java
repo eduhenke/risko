@@ -90,6 +90,7 @@ public class SidePanel extends JPanel implements Map.RegionListener {
         if (this.fromRegion.getText().equals(noText)) {
             this.fromRegion.setText(reg.name);
         } else {
+            
             this.toRegion.setText(reg.name);
         }
     }
