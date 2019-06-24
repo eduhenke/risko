@@ -57,8 +57,8 @@ public class Risko extends JFrame {
             public void mouseClicked(MouseEvent evt) {
                 switch(sidePanel.getAction()){
                 case ATTACK:
-                    System.out.println("[risko] past: " + map.selectedPastRegion.name + " | sel: " + map.selectedRegion.name);
-                    round.player.attack(map.selectedPastRegion, map.selectedRegion);
+                    System.out.println("[risko] past: " + map.selectedOriginRegion.name + " | sel: " + map.selectedRegion.name);
+                    round.player.attack(map.selectedOriginRegion, map.selectedRegion);
                 }
             }
         });
