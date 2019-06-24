@@ -88,10 +88,10 @@ public class SidePanel extends JPanel implements Map.RegionListener {
         this.selectedRegion.setText(reg.name + " de " + reg.owner.name);
         System.out.println(this.fromRegion.getText());
         if (this.fromRegion.getText().equals(noText)) {
-            this.fromRegion.setText(reg.name);
+            this.fromRegion.setText(reg.name + " - " + reg.getSoldiers() + " soldados");
         } else {
             
-            this.toRegion.setText(reg.name);
+            this.toRegion.setText(reg.name + " - " + reg.getSoldiers() + " soldados");
         }
     }
     @Override
@@ -100,7 +100,7 @@ public class SidePanel extends JPanel implements Map.RegionListener {
     }
     @Override
     public void onRegionHover(Region reg) {
-        this.hoveredRegion.setText(reg.name + " de " + reg.owner.name);
+        this.hoveredRegion.setText(reg.name + " de " + reg.owner.name + " - " + reg.getSoldiers() + " soldados");
     }
     @Override
     public void onRegionUnhover() {

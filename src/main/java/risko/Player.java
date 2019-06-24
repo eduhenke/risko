@@ -18,6 +18,7 @@ package risko;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -28,6 +29,7 @@ public class Player {
     Color color;
     String name;
     int freeSoldiers;
+    Random gen = new Random();
     
     Player(String name, Color color) {
         this.color = color;
@@ -41,6 +43,23 @@ public class Player {
             total += reg.soldiers;
         }
         return total;
+    }
+
+    public void fillRandomSoldiers(){
+
+        while (freeSoldiers > 0){
+            for (Region reg: this.states.values()) {
+                if (freeSoldiers == 0){
+                    break;
+                }
+                int n = freeSoldiers > 1 ? freeSoldiers / 2 : freeSoldiers;
+            
+                int nextSoldiers = gen.nextInt(n) + 1;
+                freeSoldiers = freeSoldiers - nextSoldiers;
+                reg.soldiers = reg.soldiers + nextSoldiers;
+            }
+        }
+    System.out.println(freeSoldiers);
     }
 
     public String getName() {
@@ -58,5 +77,6 @@ public class Player {
     
     public void attack(Region from, Region to) {
         System.out.println("Attacking from " + from.name + " to " + to.name);
+        System.out.println(from.getSoldiers());
     }
 }

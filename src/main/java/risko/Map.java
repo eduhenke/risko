@@ -37,6 +37,7 @@ public class Map extends JPanel {
     Region selectedRegion;
     Region selectedPastRegion;
     Region selectedOriginRegion;
+    Region selectedDestinyRegion;
     Player player;
 
     List<RegionListener> listeners = new ArrayList();
@@ -79,19 +80,20 @@ public class Map extends JPanel {
                             JOptionPane.showMessageDialog(null, "Selecione uma região válida");
                             return;
                         }
-                       
                         reg.setSelected(true);
                         hasSelected = true;
                         if (selectedPastRegion != null && selectedRegion != null) {
                             System.out.println("[map] past: " + selectedPastRegion.name + " | sel: " + selectedRegion.name);
                         }
                         selectedPastRegion = selectedRegion;
-                       
+                    
                         selectedRegion = reg;
 
                         if (selectingOrigin){
                             selectedOriginRegion = selectedRegion;
                             reg.setOrigin(true);
+                        } else {
+                            selectedDestinyRegion = selectedRegion;
                         }
                         for (RegionListener lst: listeners) {
                             lst.onRegionSelect(reg);

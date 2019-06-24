@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Risko extends JFrame {
     Map map;
@@ -57,8 +58,13 @@ public class Risko extends JFrame {
             public void mouseClicked(MouseEvent evt) {
                 switch(sidePanel.getAction()){
                 case ATTACK:
-                    System.out.println("[risko] past: " + map.selectedOriginRegion.name + " | sel: " + map.selectedRegion.name);
-                    round.player.attack(map.selectedOriginRegion, map.selectedRegion);
+                    if (map.selectedOriginRegion == null || map.selectedDestinyRegion == null){
+                       JOptionPane.showMessageDialog(null, "Selecione corretamente o território de origem e destino");
+                       return;
+                    }
+    
+                    System.out.println("[risko] past: " + map.selectedOriginRegion.name + " | sel: " + map.selectedDestinyRegion.name);
+                    round.player.attack(map.selectedOriginRegion, map.selectedDestinyRegion);
                 }
             }
         });
@@ -92,7 +98,8 @@ public class Risko extends JFrame {
         }
         
         Risko risko = new Risko(regions);
-        
+        A.fillRandomSoldiers();
+        B.fillRandomSoldiers();
         risko.players.add(A);
         risko.players.add(B);
         
