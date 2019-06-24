@@ -42,6 +42,10 @@ public class Player {
         }
         return total;
     }
+
+    public String getName() {
+        return this.name;
+    }
     
     public int totalSoldiers() {
         return this.allocatedSoldiers() + freeSoldiers;

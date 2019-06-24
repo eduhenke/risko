@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,15 +37,17 @@ public class Map extends JPanel {
     Region selectedRegion;
     Region selectedPastRegion;
     Region selectedOriginRegion;
+    Player player;
 
     List<RegionListener> listeners = new ArrayList();
     
     Map(List<Region> regions) {
         this.regions = regions;
         this.addMouseMotionListener(new MouseAdapter(){
-            @Override
+           @Override
             public void mouseMoved(MouseEvent evt) {
-                boolean hasSelected = false;
+              boolean hasSelected = false;
+
                 for (Region reg: regions) {
                     if (reg.contains(evt.getPoint())) {
                         reg.setHovered(true);
@@ -68,10 +71,15 @@ public class Map extends JPanel {
         this.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent evt) {
-                boolean hasSelected = false;                
+                boolean hasSelected = false;
+                boolean selectingOrigin = selectedOriginRegion == null ? true : false;      
                 for (Region reg: regions) {
                     if (reg.contains(evt.getPoint())) {
-                        
+                        if (!reg.isValid(selectingOrigin, player.getName())){
+                            JOptionPane.showMessageDialog(null, "Selecione uma região válida");
+                            return;
+                        }
+                       
                         reg.setSelected(true);
                         hasSelected = true;
                         if (selectedPastRegion != null && selectedRegion != null) {
@@ -81,7 +89,7 @@ public class Map extends JPanel {
                        
                         selectedRegion = reg;
 
-                        if (selectedOriginRegion == null){
+                        if (selectingOrigin){
                             selectedOriginRegion = selectedRegion;
                             reg.setOrigin(true);
                         }
@@ -104,6 +112,10 @@ public class Map extends JPanel {
     
     public void addRegionListener(RegionListener lst) {
         this.listeners.add(lst);
+    }
+
+    public void setCurrentPlayer(Player player){
+        this.player = player;
     }
     
     @Override

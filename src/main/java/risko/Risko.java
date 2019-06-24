@@ -51,6 +51,7 @@ public class Risko extends JFrame {
         Player player = players.get(playerIndex % players.size());
         Round round = new Round(player);
         this.sidePanel.setCurrentPlayer(round.player);
+        this.map.setCurrentPlayer(round.player);
         this.sidePanel.submitBtn.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent evt) {

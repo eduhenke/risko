@@ -37,6 +37,10 @@ public class Region extends JComponent {
     public boolean isOrigin(){
         return this.origin == true;
     }
+
+    public boolean isSelected(){
+        return this.selected == true;
+    }
     
     @Override
     public boolean contains(Point p) {
@@ -45,6 +49,13 @@ public class Region extends JComponent {
 
     public int getSoldiers(){
         return this.soldiers;
+    }
+
+    public boolean isValid(boolean selectingOrigin, String playerName){
+        if ((selectingOrigin && playerName == this.owner.getName()) || (!selectingOrigin && playerName != this.owner.getName())){
+            return true;
+        }
+        return false;
     }
     
     @Override
