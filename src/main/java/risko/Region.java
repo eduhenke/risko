@@ -52,7 +52,7 @@ public class Region extends JComponent {
     }
 
     public boolean isValid(boolean selectingOrigin, String playerName){
-        if ((selectingOrigin && playerName == this.owner.getName()) || (!selectingOrigin && playerName != this.owner.getName())){
+        if ((selectingOrigin && playerName == this.owner.getName()) && this.soldiers > 1 || (!selectingOrigin && playerName != this.owner.getName())){
             return true;
         }
         return false;

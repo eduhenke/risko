@@ -59,7 +59,6 @@ public class Player {
                 reg.soldiers = reg.soldiers + nextSoldiers;
             }
         }
-    System.out.println(freeSoldiers);
     }
 
     public String getName() {
@@ -77,6 +76,14 @@ public class Player {
     
     public void attack(Region from, Region to) {
         System.out.println("Attacking from " + from.name + " to " + to.name);
-        System.out.println(from.getSoldiers());
+        int soldierDefenser = to.getSoldiers();
+        int defenseDices = soldierDefenser > 3 ? 3 : soldierDefenser;
+        
+        int soldierAttacker = from.getSoldiers();
+        int atackerDices = soldierAttacker > 3 ? 3 : soldierAttacker - 1;
+
+        // TODO - JOGAR OS DADOS E COMPUTAR A BATALHA
     }
+
+
 }
