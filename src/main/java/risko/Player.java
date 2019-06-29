@@ -79,10 +79,31 @@ public class Player {
         int soldierDefenser = to.getSoldiers();
         int defenseDices = soldierDefenser > 3 ? 3 : soldierDefenser;
         
-        int soldierAttacker = from.getSoldiers();
-        int atackerDices = soldierAttacker > 3 ? 3 : soldierAttacker - 1;
+        Random defenseGen = new Random();
+        int totalDefense = 0;
+        for (int i = 0; i < defenseDices; i++) {
+            totalDefense += defenseGen.nextInt(6)+1;
+        }
 
-        // TODO - JOGAR OS DADOS E COMPUTAR A BATALHA
+        int soldierAttacker = from.getSoldiers();
+        int attackerDices = soldierAttacker > 3 ? 3 : soldierAttacker - 1;
+        
+        Random attackGen = new Random();
+        int totalAttack = 0;
+        for (int i = 0; i < attackerDices; i++) {
+            totalAttack += attackGen.nextInt(6)+1;
+        }
+        System.out.println("Attack: " + totalAttack + ". Defense: " + totalDefense);
+        if (totalAttack > totalDefense) {
+            System.out.println(this.name + " has won the battle against " + to.owner.name);
+            try {
+                this.states.takeFrom(to.owner.states, to.name);
+            } catch (NotFound e) {
+                System.out.println(e);
+            }
+        } else {
+            System.out.println(this.name + " has lost the battle against " + to.owner.name);
+        }
     }
 
 
